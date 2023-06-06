@@ -2,6 +2,7 @@ package com.example.TargetManagement.controller;
 
 import com.example.TargetManagement.entity.UserRecord;
 import com.example.TargetManagement.form.LoginForm;
+import com.example.TargetManagement.form.TargetForm;
 import com.example.TargetManagement.form.UserForm;
 import com.example.TargetManagement.service.ManagementService;
 import jakarta.servlet.http.HttpSession;
@@ -104,5 +105,29 @@ public class TargetController {
             return "target-list";
         }
     }
+
+    @GetMapping("/today")
+    public String today() {
+        return "today";
+    }
+
+    @GetMapping("/addTarget")
+    public String addTarget(@ModelAttribute("TargetAddForm")TargetForm targetForm) {
+        return "target-add";
+    }
+
+    @PostMapping("/TargetAddForm")
+    public String TargetAddForm(@Validated @ModelAttribute("TargetAddForm")TargetForm targetForm,
+                                BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+
+        }
+
+        var list = targetService.allTarget();
+        model.addAttribute("targets", list);
+
+        return "target-list";
+    }
+
 
 }

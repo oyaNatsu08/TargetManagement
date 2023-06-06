@@ -46,7 +46,7 @@ public class TargetDao implements ManagementDao {
 
     @Override
     public List<TargetRecord> allTarget() {
-        var list = jdbcTemplate.query("SELECT id, user_id, title, created_date, shared_url FROM targets",
+        var list = jdbcTemplate.query("SELECT id, user_id, title, created_date, shared_url, achivement_flag FROM targets",
                 new DataClassRowMapper<>(TargetRecord.class));
         return list;
     }

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>目標作成画面</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="/css/base.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="app">
+
+        <th:block th:insert="common/header"></th:block>
+
+        <div class="slide">
+
+            <h3 class="margin-right">目標作成</h3>
+
+            <div class="add-box">
+
+                <form action="/TargetAddForm" method="post" th:object="${TargetAddForm}">
+
+                    <p class="red" th:text="${message}"></p>
+                    <p style="margin-bottom: 10px;">
+                    <h4 style="display: inline-block;">
+                        <span class="red">※</span><span class="margin-right">目標タイトル</span>
+                        <input type="text" th:field="*{title}" style="margin-left: 173px;">
+                    </h4>
+                    <p><span class="red" th:errors="*{title}"></span></p>
+                    </p>
+                    <div class="d-flex align-items-start" style="margin-bottom: 10px;">
+                        <div style="display: inline-block; margin-left: 27px;">
+                            <h4 class="margin-right">詳細内容</h4>
+                            <button type="button" class="btn btn-outline-primary me-2" th:text="項目追加" v-on:click="textareaAdd"></button>
+                            <button type="button" class="btn btn-outline-primary" th:text="項目削除" v-on:click="textareaDel"></button>
+                        </div>
+                        <div class="flex-grow-1" style="margin-left: 115px;">
+                            <textarea cols="30" rows="3" maxlength="1000"></textarea>
+                        </div>
+                    </div>
+                    <div style="margin-left: 330px;" v-for="text in textarea" v-html="text">
+                        <span>{{ text }}</span>
+                    </div>
+                    <h4 style="display: inline-block;">
+                        <span class="margin-right" style="margin-left: 27px;">期限</span>
+                        <input type="number" min="1" max="12" style="width:50px; margin-left: 243px;">月
+                        <input type="number" min="1" max="30" style="width:50px;">日～
+                        <input type="number" min="1" max="12" style="width:50px;">月
+                        <input type="number" min="1" max="30" style="width:50px;">日
+                    </h4>
+
+                    <h4 style="display: inline-block;">
+                        <span class="margin-right" style="margin-left: 27px;">やる日</span>
+                        <input type="checkbox" style="margin-right: 5px; margin-left: 230px;">毎日                        
+                        <input type="checkbox" style="margin-right: 5px;">月                      
+                        <input type="checkbox" style="margin-right: 5px;">火                        
+                        <input type="checkbox" style="margin-right: 5px;">水                        
+                        <input type="checkbox" style="margin-right: 5px;">木                        
+                        <input type="checkbox" style="margin-right: 5px;">金                        
+                        <input type="checkbox" style="margin-right: 5px;">土                        
+                        <input type="checkbox" style="margin-right: 5px;">日                        
+                    </h4>
+
+                    <p style="margin-left: 350px;">
+                        <button type="submit" class="btn btn-primary me-2" th:text="作成"></button>
+                        <button type="submit" class="btn btn-primary" th:text="戻る"></button>
+                    </p>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+    
+    <script src="/js/main.js"></script>
+
+</body>
+
+</html>
