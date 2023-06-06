@@ -1,5 +1,7 @@
 package com.example.TargetManagement.controller;
 
+import com.example.TargetManagement.entity.DetailRecord;
+import com.example.TargetManagement.entity.TargetRecord;
 import com.example.TargetManagement.entity.UserRecord;
 import com.example.TargetManagement.form.LoginForm;
 import com.example.TargetManagement.form.TargetForm;
@@ -14,6 +16,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class TargetController {
@@ -47,6 +53,7 @@ public class TargetController {
                 return "login";
             } else {
                 session.setAttribute("name", user.name());
+                session.setAttribute("loginId", user.loginId());
                 return "today";
             }
         }
@@ -117,11 +124,50 @@ public class TargetController {
     }
 
     @PostMapping("/TargetAddForm")
-    public String TargetAddForm(@Validated @ModelAttribute("TargetAddForm")TargetForm targetForm,
-                                BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
+    public String TargetAddForm(@RequestParam("title") String title,
+                                @RequestParam(value = "detail", required = false) List<String> details,
+                                @RequestParam(value = "sDate", required = false) List<Integer> sDate,
+                                @RequestParam(value = "eDate", required = false) List<Integer> eDate,
+                                @RequestParam(value = "week", required = false) List<String> week,
+                                Model model) {
 
+//        System.out.println("タイトル：" + title);
+//        System.out.println("詳細；");
+//        details.forEach(System.out::println);
+//        System.out.println("期限；");
+//        date.forEach(System.out::println);
+//        System.out.println("やる日；");
+//        week.forEach(System.out::println);
+
+        //デフォルト値挿入
+        if (week == null) {
+            week = new ArrayList<>();
+            week.add("毎日");
         }
+        if (sDate == null) {
+            sDate = new ArrayList<>();
+            for(int i=0; i<2; i++) {
+                sDate.add(null);
+            }
+        }
+        if (eDate == null) {
+            eDate = new ArrayList<>();
+            for(int i=0; i<2; i++) {
+                eDate.add(null);
+            }
+        }
+
+        //ユーザーIDの割り出し
+        var user = targetService.findUser(session.getAttribute("loginId").toString());
+
+        //ターゲット作成
+        var target = new TargetRecord(null, user.id(), title, null, null, "f");
+
+        //ターゲット詳細作成
+        var detail = new DetailRecord(null, null, details, sDate, eDate, week);
+
+        //ターゲットインサート処理
+        targetService.insertTarget(target, detail);
 
         var list = targetService.allTarget();
         model.addAttribute("targets", list);
@@ -129,5 +175,26 @@ public class TargetController {
         return "target-list";
     }
 
+    @GetMapping("/TargetAddBack")
+    public String addBack(Model model) {
+        var list = targetService.allTarget();
+        model.addAttribute("targets", list);
+
+        return "target-list";
+    }
+
+    @GetMapping("detail")
+    public String detail(@RequestParam(name="id") Integer targetId, Model model) {
+        var target = targetService.findTarget(targetId);
+        var detail = targetService.findDetail(targetId);
+
+        System.out.println("目標：" + target);
+        System.out.println("詳細：" + detail);
+
+        model.addAttribute("target", target);
+        model.addAttribute("detail", detail);
+
+        return "detail";
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.example.TargetManagement.dao;
 
+import com.example.TargetManagement.entity.DetailRecord;
 import com.example.TargetManagement.entity.TargetRecord;
 import com.example.TargetManagement.entity.UserRecord;
 
@@ -14,5 +15,11 @@ public interface ManagementDao {
     UserRecord findUser(String loginId);
 
     List<TargetRecord> allTarget();
+
+    int insertTarget(TargetRecord targetRecord, DetailRecord detailRecord);
+
+    TargetRecord findTarget(Integer targetId);
+
+    List<DetailRecord> findDetail(Integer targetId);
 
 }

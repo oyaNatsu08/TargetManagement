@@ -17,7 +17,7 @@ createApp({
             //     })
         },
         textareaAdd() {
-            this.textarea.push('<span class="flex-grow-1"><textarea cols="30" rows="3" maxlength="1000"></textarea></span>');
+            this.textarea.push('<span class="flex-grow-1"><textarea name="detail" cols="30" rows="3" maxlength="1000"></textarea></span>');
         },
         textareaDel() {
             this.textarea.pop();
