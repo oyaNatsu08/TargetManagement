@@ -1,8 +1,6 @@
 package com.example.TargetManagement.dao;
 
-import com.example.TargetManagement.entity.DetailRecord;
-import com.example.TargetManagement.entity.TargetRecord;
-import com.example.TargetManagement.entity.UserRecord;
+import com.example.TargetManagement.entity.*;
 
 import java.util.List;
 
@@ -18,8 +16,14 @@ public interface ManagementDao {
 
     int insertTarget(TargetRecord targetRecord, DetailRecord detailRecord);
 
-    TargetRecord findTarget(Integer targetId);
+    TargetRecord2 findTarget(Integer targetId);
 
-    List<DetailRecord> findDetail(Integer targetId);
+    List<DetailRecord2> findDetail(Integer targetId);
+
+    int insertTarget2(TargetRecord2 targetRecord, DetailRecord2 detailRecord);
+
+    int update(TargetRecord2 targetRecord, DetailRecord2 detailRecord, List<Integer> detailsId);
+
+    int delete(Integer targetId);
 
 }

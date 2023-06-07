@@ -1,9 +1,7 @@
 package com.example.TargetManagement.service;
 
 import com.example.TargetManagement.dao.TargetDao;
-import com.example.TargetManagement.entity.DetailRecord;
-import com.example.TargetManagement.entity.TargetRecord;
-import com.example.TargetManagement.entity.UserRecord;
+import com.example.TargetManagement.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,13 +39,28 @@ public class TargetManagementService implements ManagementService {
     }
 
     @Override
-    public TargetRecord findTarget(Integer targetId) {
+    public TargetRecord2 findTarget(Integer targetId) {
         return targetDao.findTarget(targetId);
     }
 
     @Override
-    public List<DetailRecord> findDetail(Integer targetId) {
+    public List<DetailRecord2> findDetail(Integer targetId) {
         return targetDao.findDetail(targetId);
+    }
+
+    @Override
+    public int insertTarget2(TargetRecord2 targetRecord, DetailRecord2 detailRecord) {
+        return targetDao.insertTarget2(targetRecord, detailRecord);
+    }
+
+    @Override
+    public int update(TargetRecord2 targetRecord, DetailRecord2 detailRecord, List<Integer> detailsId) {
+        return targetDao.update(targetRecord, detailRecord, detailsId);
+    }
+
+    @Override
+    public int delete(Integer targetId) {
+        return targetDao.delete(targetId);
     }
 
 }

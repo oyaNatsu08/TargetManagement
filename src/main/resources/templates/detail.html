@@ -22,46 +22,73 @@
 
             <div class="add-box">
 
-                
-                    <p class="red" th:text="${message}"></p>
-                    <p style="margin-bottom: 10px;">
-                    <h4 style="display: inline-block;">
-                        <span class="margin-right">目標タイトル</span>
-                        <input type="text" th:value="${target.title}"  style="margin-left: 173px;" disabled>
-                    </h4>
-                    <p><span class="red"></span></p>
-                    </p>
-                    <div class="d-flex align-items-start" style="margin-bottom: 10px;">
-                        <div style="display: inline-block; margin-left: 27px;">
-                            <h4 class="margin-right">詳細内容</h4>
-                        </div>
-                        <div class="flex-grow-1" style="margin-left: 115px;">
-                            <textarea cols="30" rows="3" maxlength="1000" th:value="${detail.content}"></textarea>
-                        </div>
+                <p class="red" th:text="${message}"></p>
+                <p style="margin-bottom: 10px;">
+                <h4 style="display: inline-block;">
+                    <span class="margin-right" style="margin-left: 27px;">目標タイトル</span>
+                </h4>
+                <input type="text" th:value="${target.title}" style="margin-left: 150px; width: 300px;" disabled>
+                <p><span class="red"></span></p>
+                </p>
+                <div style="margin-bottom: 10px;">
+                    <div style="display: inline-block; margin-left: 27px;">
+                        <h4 class="margin-right">詳細内容</h4>
                     </div>
+
+                    <th:block th:each="content : ${contents}">
+                        <div style="margin-left: 310px;">
+                            <textarea cols="30" rows="3" maxlength="1000" th:value="${content}" disabled></textarea>
+                        </div>
+                    </th:block>
+
+                </div>
+                <div>
                     <h4 style="display: inline-block;">
                         <span class="margin-right" style="margin-left: 27px;">期限</span>
-                        <input type="text" th:value="${detail.date}" disabled>
                     </h4>
-
+                    <input type="text" th:value="${date}" style="margin-left: 220px; width: 300px;" disabled>
+                </div>
+                <div>
                     <h4 style="display: inline-block;">
                         <span class="margin-right" style="margin-left: 27px;">やる日</span>
-                        <input type="text" th:value="${detail.week}" disabled>                    
                     </h4>
+                    <input type="text" th:value="${week}" style="margin-left: 205px; width: 300px;" disabled>
+                </div>
 
-                    <p style="margin-left: 350px;">
-                        <button type="submit" class="btn btn-primary me-2" th:text="作成"></button>
-                        <a th:href="@{/TargetAddBack}" class="btn btn-primary" th:text="戻る"></a>
-                    </p>
+                <div style="margin-left: 310px; margin-top: 10px;">
+                    <form action="update" method="get" style="display: inline-block;">
+                        <input type="hidden" name="id" th:value="${id}">
+                        <th:block th:each="detailId : ${detailsId}">
+                            <input type="hidden" name="detailId" th:value="${detailId}">
+                        </th:block>
+                        <button type="submit" class="btn btn-primary me-2" th:text="編集"></button>
+                    </form>
+                    <form action="delete" method="post" style="display: inline-block;">
+                        <input type="hidden" name="id" th:value="${id}">
+                        <button type="submit" onclick="openModal()" class="btn btn-primary me-2" th:text="削除"></button>
+                        <!-- <div id="modal">
+                            <p class="modal-message">削除しますか？</p>
+                            <div class="btns">
+                                <button type="button" id="delete-btn" class="basic-btn">削除</button>
+                                <button type="button" onclick="closeModal()" class="cancel-btn">キャンセル</button>
+                            </div>
+                        </div> -->
+                    </form>
+                    <form action="TargetListBack" method="get" style="display: inline-block;">
+                        <button type="submit" class="btn btn-primary me-2" th:text="戻る"></button>
+                    </form>
+                </div>
 
-         
+
             </div>
 
         </div>
 
     </div>
-    
+    <div id="fadeLayer"></div>
+
     <script src="/js/main.js"></script>
+    <script src="/js/commons.js"></script>
 
 </body>
 

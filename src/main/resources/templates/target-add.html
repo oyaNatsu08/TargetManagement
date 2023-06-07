@@ -22,7 +22,7 @@
 
             <div class="add-box">
 
-                <form action="/TargetAddForm" method="post">
+                <form action="/TargetAddForm2" method="post">
 
                     <p class="red" th:text="${message}"></p>
                     <p style="margin-bottom: 10px;">
@@ -39,7 +39,7 @@
                             <button type="button" class="btn btn-outline-primary" th:text="項目削除" v-on:click="textareaDel"></button>
                         </div>
                         <div class="flex-grow-1" style="margin-left: 115px;">
-                            <textarea cols="30" rows="3" maxlength="1000" name="detail"></textarea>
+                            <textarea cols="30" rows="3" maxlength="1000" name="content"></textarea>
                         </div>
                     </div>
                     <div style="margin-left: 330px;" v-for="text in textarea" v-html="text">
@@ -55,19 +55,19 @@
 
                     <h4 style="display: inline-block;">
                         <span class="margin-right" style="margin-left: 27px;">やる日</span>
-                        <input type="checkbox" name="week" value="毎日" style="margin-right: 5px; margin-left: 230px;">毎日                        
-                        <input type="checkbox" name="week" value="月" style="margin-right: 5px;">月                      
-                        <input type="checkbox" name="week" value="火" style="margin-right: 5px;">火                        
-                        <input type="checkbox" name="week" value="水" style="margin-right: 5px;">水                        
-                        <input type="checkbox" name="week" value="木" style="margin-right: 5px;">木                        
-                        <input type="checkbox" name="week" value="金" style="margin-right: 5px;">金                        
-                        <input type="checkbox" name="week" value="土" style="margin-right: 5px;">土                        
-                        <input type="checkbox" name="week" value="日" style="margin-right: 5px;">日                        
+                        <input type="checkbox" name="week" value="every" style="margin-right: 5px; margin-left: 230px;">毎日                        
+                        <input type="checkbox" name="week" value="mon" style="margin-right: 5px;">月                      
+                        <input type="checkbox" name="week" value="tues" style="margin-right: 5px;">火                        
+                        <input type="checkbox" name="week" value="wednes" style="margin-right: 5px;">水                        
+                        <input type="checkbox" name="week" value="thurs" style="margin-right: 5px;">木                        
+                        <input type="checkbox" name="week" value="fri" style="margin-right: 5px;">金                        
+                        <input type="checkbox" name="week" value="satur" style="margin-right: 5px;">土                        
+                        <input type="checkbox" name="week" value="sun" style="margin-right: 5px;">日                        
                     </h4>
 
                     <p style="margin-left: 350px;">
                         <button type="submit" class="btn btn-primary me-2" th:text="作成"></button>
-                        <a th:href="@{/TargetAddBack}" class="btn btn-primary" th:text="戻る"></a>
+                        <a th:href="@{/TargetListBack}" class="btn btn-primary" th:text="戻る"></a>
                     </p>
 
                 </form>

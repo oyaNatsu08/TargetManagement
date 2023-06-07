@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>目標編集画面</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link href="/css/base.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <div id="app">
+
+        <th:block th:insert="common/header"></th:block>
+
+        <div class="slide">
+
+            <h3 class="margin-right">目標編集</h3>
+
+            <div class="add-box">
+
+                <form action="/TargetUpdate" method="post">
+                    <input type="hidden" name="_method" value="put">
+
+                    <p class="red" th:text="${message}"></p>
+                    <p style="margin-bottom: 10px;">
+                    <h4 style="display: inline-block;">
+                        <span class="red">※</span><span class="margin-right">目標タイトル</span>
+                        <input type="text" name="title" style="margin-left: 173px;" th:value="${target.title}" required>
+                    </h4>
+                    <p><span class="red"></span></p>
+                    </p>
+                    <div style="margin-bottom: 10px;">
+                        <div style="display: inline-block; margin-left: 27px;">
+                            <h4 class="margin-right">詳細内容</h4>
+                            <button type="button" class="btn btn-outline-primary me-2" th:text="項目追加"
+                                v-on:click="textareaAdd"></button>
+                            <button type="button" class="btn btn-outline-primary" th:text="項目削除"
+                                v-on:click="textareaDel"></button>
+                        </div>
+                    </div>
+                    <th:block th:each="content : ${contents}">
+                            <div style="margin-left: 330px;">
+                                <textarea cols="30" rows="3" maxlength="1000" name="content"
+                                    th:value="${content}"></textarea>
+                            </div>
+                        </th:block>
+                    <div style="margin-left: 330px;" v-for="text in textarea" v-html="text">
+                        <span>{{ text }}</span>
+                    </div>
+                    <h4 style="display: inline-block;">
+                        <span class="margin-right" style="margin-left: 27px;">期限</span>
+                        <input type="number" name="sDate" min="1" max="12" style="width:50px; margin-left: 243px;"
+                            th:value="${month1}">月
+                        <input type="number" name="sDate" min="1" max="30" style="width:50px;" th:value="${day1}">日～
+                        <input type="number" name="eDate" min="1" max="12" style="width:50px;" th:value="${month2}">月
+                        <input type="number" name="eDate" min="1" max="30" style="width:50px;" th:value="${day2}">日
+                    </h4>
+
+                    <h4 style="display: inline-block;">
+                        <span class="margin-right" style="margin-left: 27px;">やる日</span>
+                        <div th:if="${target.every} == true" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="every"
+                                style="margin-right: 5px; margin-left: 230px;" checked>
+                        </div>
+                        <div th:if="${target.every} == false" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="every"
+                                style="margin-right: 5px; margin-left: 230px;">
+                        </div>
+                        毎日
+                        <div th:if="${target.mon} == true" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="mon" style="margin-right: 5px;" checked>
+                        </div>
+                        <div th:if="${target.mon} == false" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="mon" style="margin-right: 5px;">
+                        </div>
+                        月
+                        <div th:if="${target.tues} == true" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="tues" style="margin-right: 5px;" checked>
+                        </div>
+                        <div th:if="${target.tues} == false" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="tues" style="margin-right: 5px;">
+                        </div>
+                        火
+                        <div th:if="${target.wednes} == true" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="wednes" style="margin-right: 5px;" checked>
+                        </div>
+                        <div th:if="${target.wednes} == false" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="wednes" style="margin-right: 5px;">
+                        </div>
+                        水
+                        <div th:if="${target.thurs} == true" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="thurs" style="margin-right: 5px;" checked>
+                        </div>
+                        <div th:if="${target.thurs} == false" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="thurs" style="margin-right: 5px;">
+                        </div>
+                        木
+                        <div th:if="${target.fri} == true" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="fri" style="margin-right: 5px;" checked>
+                        </div>
+                        <div th:if="${target.fri} == false" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="fri" style="margin-right: 5px;">
+                        </div>
+                        金
+                        <div th:if="${target.satur} == true" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="satur" style="margin-right: 5px;" checked>
+                        </div>
+                        <div th:if="${target.satur} == false" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="satur" style="margin-right: 5px;">
+                        </div>
+                        土
+                        <div th:if="${target.sun} == true" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="sun" style="margin-right: 5px;" checked>
+                        </div>
+                        <div th:if="${target.sun} == false" style="display: inline-block;">
+                            <input type="checkbox" name="week" value="sun" style="margin-right: 5px;">
+                        </div>
+                        日
+                    </h4>
+
+                    <p style="margin-left: 350px;">
+                        <button type="submit" class="btn btn-primary me-2" th:text="更新"></button>
+                        <input type="hidden" name="id" th:value="${target.id}" />
+                        <th:block th:each="detailId : ${detailsId}">
+                            <input type="hidden" name="detailId" th:value="${detailId}">
+                        </th:block>
+                        <a th:href="@{/TargetListBack}" class="btn btn-primary" th:text="戻る"></a>
+                    </p>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="/js/main.js"></script>
+
+</body>
+
+</html>
