@@ -43,6 +43,9 @@ body {
 .slide {
     margin-left: 20%;
 }
+.slide-reverse {
+    margin-right: 20%;
+}
 .search-container {
     box-sizing: border-box;
     position: relative;

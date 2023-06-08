@@ -179,27 +179,30 @@ public class TargetDao implements ManagementDao {
                 "every = :every, mon = :mon, tues = :tues, wednes = :wednes, thurs = :thurs, fri = :fri, " +
                 "satur = :satur, sun = :sun WHERE id = :id", param);
 
-        //更新前からある分の詳細内容
-        for (int i = 0; i < detailsId.size(); i++) {
-            param.addValue("content", detailRecord.content().get(i));
-            param.addValue("detailId", detailsId.get(i));
+        if (detailsId != null) {
+            //更新前からある分の詳細内容
+            for (int i = 0; i < detailsId.size(); i++) {
+                param.addValue("content", detailRecord.content().get(i));
+                param.addValue("detailId", detailsId.get(i));
 
-            //更新前に入力したものを消したなら
-            if (detailRecord.content().get(i).equals("")) {
-                jdbcTemplate.update("DELETE FROM details2 WHERE id = :detailId", param);
-            } else {
-                jdbcTemplate.update("UPDATE details2 SET content = :content WHERE id = :detailId", param);
+                //更新前に入力したものを消したなら
+                if (detailRecord.content().get(i).equals("")) {
+                    jdbcTemplate.update("DELETE FROM details2 WHERE id = :detailId", param);
+                } else {
+                    jdbcTemplate.update("UPDATE details2 SET content = :content WHERE id = :detailId", param);
+                }
+
             }
-
-        }
 
 //        System.out.println(detailsId.size());
 //        System.out.println(detailRecord.content().size());
-        //新しく追加された詳細内容
-        for (int j = detailsId.size(); j < detailRecord.content().size(); j++) {
-            param.addValue("targetId", targetRecord.id());
-            param.addValue("content", detailRecord.content().get(j));
-            jdbcTemplate.update("INSERT INTO details2(target_id, content) VALUES(:targetId, :content)", param);
+            //新しく追加された詳細内容
+            for (int j = detailsId.size(); j < detailRecord.content().size(); j++) {
+                param.addValue("targetId", targetRecord.id());
+                param.addValue("content", detailRecord.content().get(j));
+                jdbcTemplate.update("INSERT INTO details2(target_id, content) VALUES(:targetId, :content)", param);
+            }
+
         }
 
         return 1;

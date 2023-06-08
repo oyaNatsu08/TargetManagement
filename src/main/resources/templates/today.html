@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -14,11 +14,36 @@
         <h1 class="me-auto" style="margin-top: 30px; margin-left: 40%;">今日やることはコレ！</h1>
         <a class="p-2 mt-5 me-5 btn btn-outline-primary" th:href="@{/list}" th:text="目標管理ページへ"></a>
     </div>
-    <th:block th:each="target : ${targets}">
-        <div>
-            <h5 style="border: blue solid 3px;"><a th:href="@{detail(id=${target.id})}" th:text="${target.title}"></a></h5>
-        </div>
-    </th:block>
+    <div style="margin-left: 20%; width: 60%;" class="add-box">
+        <th:block th:each="target: ${targets}">
+            <div style="border: gold solid 2px;" class="mb-2">
+                <h3>
+                    <a th:href="@{detail(id=${target.id})}" th:text="${target.title}"></a>
+                </h3>
+                <th:block th:each="detail, iterStat : ${details}">
+                    <th:block th:each="deta, iterStat2 : ${detail}">
+                        <div th:if="${target.id} == ${deta.targetId}">
+                            <ul>
+                                <li>
+                                    <p th:text="${iterStat.count}"></p>
+                                    <label th:for="'checkboxId_' + ${iterStat.count} * ${iterStat2.count}">
+                                        <span th:text="${deta.content}"
+                                            style="font-size: 30px; display: inline-block;"></span>
+                                        <input type="checkbox" th:id="'checkboxId_' + ${iterStat.count} * ${iterStat2.count}" 
+                                        name="complete" value="complete" style="margin-left: 20px;">
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </th:block>
+                </th:block>
+            </div>
+        </th:block>
+        <form action="complete" method="post">
+            <button type="submit" th:text="完了！！" class="btn btn-primary btn-lg" style="margin-left: 50%;"></button>
+        </form>
+    </div>
+
 </body>
 
 </html>

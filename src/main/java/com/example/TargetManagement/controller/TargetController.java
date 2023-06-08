@@ -52,8 +52,17 @@ public class TargetController {
                 session.setAttribute("name", user.name());
                 session.setAttribute("loginId", user.loginId());
 
-                var list = targetService.todayTargets();
-                model.addAttribute("targets", list);
+                var targetList = targetService.todayTargets();
+
+                //詳細リスト作成
+                List<List<DetailRecord2>> details = new ArrayList<>();
+
+                for (TargetRecord2 target : targetList) {
+                    details.add(targetService.findDetail(target.id()));
+                }
+
+                model.addAttribute("targets", targetList);
+                model.addAttribute("details", details);
 
                 return "today";
             }
@@ -117,8 +126,17 @@ public class TargetController {
     @GetMapping("/today")
     public String today(Model model) {
 
-        var list = targetService.todayTargets();
-        model.addAttribute("targets", list);
+        var targetList = targetService.todayTargets();
+
+        //詳細リスト作成
+        List<List<DetailRecord2>> details = new ArrayList<>();
+
+        for (TargetRecord2 target : targetList) {
+            details.add(targetService.findDetail(target.id()));
+        }
+
+        model.addAttribute("targets", targetList);
+        model.addAttribute("details", details);
 
         return "today";
     }
@@ -360,7 +378,7 @@ public class TargetController {
 
     @GetMapping("/update")
     public String updateView(@RequestParam("id") Integer targetId,
-                             @RequestParam("detailId") List<Integer> detailsId,
+                             @RequestParam(value = "detailId", required = false) List<Integer> detailsId,
                              Model model) {
         var target = targetService.findTarget(targetId);
         var detail = targetService.findDetail(targetId);
@@ -391,7 +409,7 @@ public class TargetController {
 
     @PostMapping("/TargetUpdate")
     public String update(@RequestParam("id") Integer id,
-                         @RequestParam("detailId") List<Integer> detailsId,
+                         @RequestParam(value = "detailId", required = false) List<Integer> detailsId,
                          @RequestParam("title") String title,
                          @RequestParam(value = "content", required = false) List<String> contents,
                          @RequestParam(value = "sDate", required = false) List<Integer> sDate,
