@@ -51,6 +51,10 @@ public class TargetController {
             } else {
                 session.setAttribute("name", user.name());
                 session.setAttribute("loginId", user.loginId());
+
+                var list = targetService.todayTargets();
+                model.addAttribute("targets", list);
+
                 return "today";
             }
         }
@@ -111,7 +115,11 @@ public class TargetController {
     }
 
     @GetMapping("/today")
-    public String today() {
+    public String today(Model model) {
+
+        var list = targetService.todayTargets();
+        model.addAttribute("targets", list);
+
         return "today";
     }
 
@@ -344,6 +352,7 @@ public class TargetController {
         targetService.insertTarget2(targetRecord, detailRecord);
 
         var list = targetService.allTarget();
+
         model.addAttribute("targets", list);
 
         return "target-list";

@@ -40,10 +40,10 @@
                 </div>
 
                 <th:block th:each="target : ${targets}">
-                    <div th:if="${target.achivementFlag} == f">
+                    <div th:if="${target.achivementFlag} == false">
                         <h5 style="border: blue solid 3px;"><a th:href="@{detail(id=${target.id})}" th:text="${target.title}"></a></h5>
                     </div>
-                    <div th:if="${target.achivementFlag} == t">
+                    <div th:if="${target.achivementFlag} == true">
                         <h5 style="border: gray solid 3px; background-color: lightgray;"><a th:href="@{detail(id=${target.id})}" th:text="${target.title}"></a></h5>
                     </div>
                 </th:block>

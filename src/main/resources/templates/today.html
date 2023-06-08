@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <title>今日やること</title>
@@ -7,7 +8,17 @@
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="/css/base.css" rel="stylesheet">
 </head>
+
 <body>
-    <a class="btn btn-primary" th:href="@{/list}" th:text="目標管理ページへ"></a>
+    <div class="d-flex mb-3">
+        <h1 class="me-auto" style="margin-top: 30px; margin-left: 40%;">今日やることはコレ！</h1>
+        <a class="p-2 mt-5 me-5 btn btn-outline-primary" th:href="@{/list}" th:text="目標管理ページへ"></a>
+    </div>
+    <th:block th:each="target : ${targets}">
+        <div>
+            <h5 style="border: blue solid 3px;"><a th:href="@{detail(id=${target.id})}" th:text="${target.title}"></a></h5>
+        </div>
+    </th:block>
 </body>
+
 </html>

@@ -29,7 +29,7 @@ public class TargetManagementService implements ManagementService {
     }
 
     @Override
-    public List<TargetRecord> allTarget() {
+    public List<TargetRecord2> allTarget() {
         return targetDao.allTarget();
     }
 
@@ -61,6 +61,11 @@ public class TargetManagementService implements ManagementService {
     @Override
     public int delete(Integer targetId) {
         return targetDao.delete(targetId);
+    }
+
+    @Override
+    public List<TargetRecord2> todayTargets() {
+        return targetDao.todayTargets();
     }
 
 }

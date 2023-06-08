@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -48,9 +49,10 @@ public class TargetDao implements ManagementDao {
     }
 
     @Override
-    public List<TargetRecord> allTarget() {
-        var list = jdbcTemplate.query("SELECT id, user_id, title, created_date, shared_url, achivement_flag FROM targets2",
-                new DataClassRowMapper<>(TargetRecord.class));
+    public List<TargetRecord2> allTarget() {
+        var list = jdbcTemplate.query("SELECT id, user_id, title, created_date, shared_url, achivement_flag, " +
+                        "start_term, end_term, every, mon, tues, wednes, thurs, fri, satur, sun FROM targets2",
+                new DataClassRowMapper<>(TargetRecord2.class));
         return list;
     }
 
@@ -214,6 +216,22 @@ public class TargetDao implements ManagementDao {
 
         return 1;
 
+    }
+
+    @Override
+    public List<TargetRecord2> todayTargets() {
+
+        var list = jdbcTemplate.query("SELECT id, user_id, title, created_date, shared_url, achivement_flag, " +
+                "start_term, end_term, every, mon, tues, wednes, thurs, fri, satur, sun FROM targets2 " +
+                "WHERE (now() BETWEEN start_term AND end_term) AND " +
+                "(CASE date_part('dow', current_date)" +
+                "WHEN 0 THEN sun WHEN 1 THEN mon WHEN 2 THEN tues WHEN 3 THEN wednes WHEN 4 THEN thurs " +
+                "WHEN 5 THEN fri WHEN 6 THEN satur " +
+                "END OR every)", new DataClassRowMapper<>(TargetRecord2.class));
+
+        //System.out.println("今日やること：" + list);
+
+        return list;
     }
 
 }

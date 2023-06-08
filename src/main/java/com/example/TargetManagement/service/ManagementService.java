@@ -12,7 +12,7 @@ public interface ManagementService {
 
     UserRecord findUser(String loginId);
 
-    List<TargetRecord> allTarget();
+    List<TargetRecord2> allTarget();
 
     int insertTarget(TargetRecord targetRecord, DetailRecord detailRecord);
 
@@ -25,5 +25,7 @@ public interface ManagementService {
     int update(TargetRecord2 targetRecord, DetailRecord2 detailRecord, List<Integer> detailsId);
 
     int delete(Integer targetId);
+
+    List<TargetRecord2> todayTargets();
 
 }

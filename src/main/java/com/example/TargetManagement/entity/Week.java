@@ -13,6 +13,38 @@ public class Week {
     Boolean satur = false;
     Boolean sun = false;
 
+    public void setEvery(Boolean every) {
+        this.every = every;
+    }
+
+    public void setMon(Boolean mon) {
+        this.mon = mon;
+    }
+
+    public void setTues(Boolean tues) {
+        this.tues = tues;
+    }
+
+    public void setWednes(Boolean wednes) {
+        this.wednes = wednes;
+    }
+
+    public void setThurs(Boolean thurs) {
+        this.thurs = thurs;
+    }
+
+    public void setFri(Boolean fri) {
+        this.fri = fri;
+    }
+
+    public void setSatur(Boolean satur) {
+        this.satur = satur;
+    }
+
+    public void setSun(Boolean sun) {
+        this.sun = sun;
+    }
+
     public Week(List<String> weeks) {
 
         for (String week : weeks) {

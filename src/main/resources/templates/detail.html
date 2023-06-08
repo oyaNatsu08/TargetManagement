@@ -65,14 +65,7 @@
                     </form>
                     <form action="delete" method="post" style="display: inline-block;">
                         <input type="hidden" name="id" th:value="${id}">
-                        <button type="submit" onclick="openModal()" class="btn btn-primary me-2" th:text="削除"></button>
-                        <!-- <div id="modal">
-                            <p class="modal-message">削除しますか？</p>
-                            <div class="btns">
-                                <button type="button" id="delete-btn" class="basic-btn">削除</button>
-                                <button type="button" onclick="closeModal()" class="cancel-btn">キャンセル</button>
-                            </div>
-                        </div> -->
+                        <button type="submit" class="btn btn-primary me-2" th:text="削除"></button>
                     </form>
                     <form action="TargetListBack" method="get" style="display: inline-block;">
                         <button type="submit" class="btn btn-primary me-2" th:text="戻る"></button>
@@ -88,7 +81,6 @@
     <div id="fadeLayer"></div>
 
     <script src="/js/main.js"></script>
-    <script src="/js/commons.js"></script>
 
 </body>
 
