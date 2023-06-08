@@ -237,4 +237,30 @@ public class TargetDao implements ManagementDao {
         return list;
     }
 
+    @Override
+    public int complete(List<Integer> detailsId) {
+        MapSqlParameterSource param = new MapSqlParameterSource();
+
+        for (Integer detailId : detailsId) {
+
+            param.addValue("id", detailId);
+            jdbcTemplate.update("INSERT INTO completes(detail_id, flag, complete_date) VALUES(:id, 't', now())", param);
+
+        }
+
+        return 1;
+
+    }
+
+    @Override
+    public boolean completeCheck(List<Integer> detailsId) {
+        MapSqlParameterSource param = new MapSqlParameterSource();
+
+        for (Integer detailId : detailsId) {
+            param.addValue("detailId", detailId);
+           // var list = jdbcTemplate.query("SELECT true FROM completes WHERE ")
+        }
+return true;
+    }
+
 }

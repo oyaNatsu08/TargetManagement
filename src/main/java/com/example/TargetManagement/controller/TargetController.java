@@ -57,6 +57,8 @@ public class TargetController {
                 //詳細リスト作成
                 List<List<DetailRecord2>> details = new ArrayList<>();
 
+                //完了済みかチェックする処理
+
                 for (TargetRecord2 target : targetList) {
                     details.add(targetService.findDetail(target.id()));
                 }
@@ -494,6 +496,21 @@ public class TargetController {
         model.addAttribute("targets", list);
 
         return "target-list";
+
+    }
+
+    @PostMapping("/complete")
+    public String complete(@RequestParam(value = "detailId", required = false)List<Integer> detailsId,
+                           Model model) {
+
+        detailsId.forEach(System.out::println);
+
+        targetService.complete(detailsId);
+
+        var list = targetService.allTarget();
+        model.addAttribute("targets", list);
+
+        return "/target-list";
 
     }
 

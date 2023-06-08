@@ -68,4 +68,14 @@ public class TargetManagementService implements ManagementService {
         return targetDao.todayTargets();
     }
 
+    @Override
+    public int complete(List<Integer> detailsId) {
+        return targetDao.complete(detailsId);
+    }
+
+    @Override
+    public boolean completeCheck(List<Integer> detailsId) {
+        return targetDao.completeCheck(detailsId);
+    }
+
 }

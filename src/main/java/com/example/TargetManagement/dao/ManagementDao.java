@@ -28,4 +28,8 @@ public interface ManagementDao {
 
     List<TargetRecord2> todayTargets();
 
+    int complete(List<Integer> detailsId);
+
+    boolean completeCheck(List<Integer> detailsId);
+
 }

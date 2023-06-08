@@ -15,31 +15,35 @@
         <a class="p-2 mt-5 me-5 btn btn-outline-primary" th:href="@{/list}" th:text="目標管理ページへ"></a>
     </div>
     <div style="margin-left: 20%; width: 60%;" class="add-box">
-        <th:block th:each="target: ${targets}">
-            <div style="border: gold solid 2px;" class="mb-2">
-                <h3>
-                    <a th:href="@{detail(id=${target.id})}" th:text="${target.title}"></a>
-                </h3>
-                <th:block th:each="detail, iterStat : ${details}">
-                    <th:block th:each="deta, iterStat2 : ${detail}">
-                        <div th:if="${target.id} == ${deta.targetId}">
-                            <ul>
-                                <li>
-                                    <p th:text="${iterStat.count}"></p>
-                                    <label th:for="'checkboxId_' + ${iterStat.count} * ${iterStat2.count}">
-                                        <span th:text="${deta.content}"
-                                            style="font-size: 30px; display: inline-block;"></span>
-                                        <input type="checkbox" th:id="'checkboxId_' + ${iterStat.count} * ${iterStat2.count}" 
-                                        name="complete" value="complete" style="margin-left: 20px;">
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                    </th:block>
-                </th:block>
-            </div>
-        </th:block>
         <form action="complete" method="post">
+            <th:block th:each="target: ${targets}">
+                <div style="border: gold solid 2px;" class="mb-2">
+                    <h3>
+                        <a th:href="@{detail(id=${target.id})}" th:text="${target.title}"></a>
+                    </h3>
+                    <th:block th:each="detail, iterStat : ${details}">
+                        <th:block th:each="deta, detaStat : ${detail}">
+                            <div th:if="${target.id} == ${deta.targetId}">
+                                <ul>
+                                    <th:block th:each="con : ${deta.content}">
+                                        <li>
+                                            <label th:for="${iterStat.count} + '_' + ${detaStat.count}">
+                                                <span th:text="${con}"
+                                                    style="font-size: 30px; display: inline-block;"></span>
+                                                <!-- <p th:text="${deta.id}"></p> -->
+                                                <input type="checkbox"
+                                                    th:id="${iterStat.count} + '_' + ${detaStat.count}" name="detailId"
+                                                    th:value="${deta.id}" style="margin-left: 20px;">
+                                            </label>
+                                        </li>
+                                    </th:block>
+                                </ul>
+                            </div>
+                        </th:block>
+                    </th:block>
+                </div>
+            </th:block>
+            <!-- <input type="hidden" name="detailId" th:value="details.detail.id"> -->
             <button type="submit" th:text="完了！！" class="btn btn-primary btn-lg" style="margin-left: 50%;"></button>
         </form>
     </div>
